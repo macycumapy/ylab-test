@@ -17,7 +17,7 @@ class TaskReportRequest extends FormRequest
             'date_start' => ['sometimes', 'date_format:Y-m-d'],
             'date_finish' => ['sometimes', 'date_format:Y-m-d'],
             'is_confirmed' => ['sometimes', 'boolean'],
-            'user_id' => ['sometimes', 'integer'],
+            'user_id' => ['sometimes', 'integer', 'exists:users,id'],
         ];
     }
 }

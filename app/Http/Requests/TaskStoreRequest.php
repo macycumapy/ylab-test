@@ -18,7 +18,7 @@ class TaskStoreRequest extends FormRequest
             'date_finish' => ['required', 'date'],
             'name' => ['required', 'string'],
             'project' => ['required', 'string'],
-            'user_id' => ['required', 'integer'],
+            'user_id' => ['required', 'integer', 'exists:users,id'],
         ];
     }
 }
