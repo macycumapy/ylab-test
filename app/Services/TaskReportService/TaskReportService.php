@@ -10,35 +10,34 @@ class TaskReportService
 {
     private Builder $tasks;
 
-    public function __construct(private array $filters = [])
+    public function __construct()
     {
         $this->tasks = Task::query();
     }
 
     public function generate(): string
     {
-        if (!empty($this->filters)) {
-            $this->setFilters();
-        }
         $document = new TaskReportDocument($this->getTasks());
 
         return $document->generate();
     }
 
-    private function setFilters(): void
+    public function setFilters(array $filters): self
     {
-        if (isset($this->filters['date_start'])) {
-            $this->tasks->where('date_start', '>=', $this->filters['date_start']);
+        if (isset($filters['date_start'])) {
+            $this->tasks->where('date_start', '>=', $filters['date_start']);
         }
-        if (isset($this->filters['date_finish'])) {
-            $this->tasks->where('date_finish', '<=', $this->filters['date_finish']);
+        if (isset($filters['date_finish'])) {
+            $this->tasks->where('date_finish', '<=', $filters['date_finish']);
         }
-        if (isset($this->filters['is_confirmed'])) {
-            $this->tasks->where('is_confirmed', $this->filters['is_confirmed']);
+        if (isset($filters['is_confirmed'])) {
+            $this->tasks->where('is_confirmed', $filters['is_confirmed']);
         }
-        if (isset($this->filters['user_id'])) {
-            $this->tasks->where('user_id', $this->filters['user_id']);
+        if (isset($filters['user_id'])) {
+            $this->tasks->where('user_id', $filters['user_id']);
         }
+
+        return $this;
     }
 
     private function getTasks(): Collection

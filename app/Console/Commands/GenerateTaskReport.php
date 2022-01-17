@@ -33,8 +33,8 @@ class GenerateTaskReport extends Command
             $filters['date_finish'] = now()->endOfWeek()->format('Y-m-d H:i');
         }
 
-        $report = new TaskReportService($filters);
-        $report->generate();
+        $report = new TaskReportService();
+        $report->setFilters($filters)->generate();
 
         $this->info('Отчет сформирован');
     }

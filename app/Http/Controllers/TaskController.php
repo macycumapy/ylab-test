@@ -116,12 +116,15 @@ class TaskController extends Controller
 
     /**
      * @param TaskReportRequest $request
+     * @param TaskReportService $reportService
      * @return BinaryFileResponse
      */
-    public function getReport(TaskReportRequest $request): BinaryFileResponse
+    public function getReport(TaskReportRequest $request, TaskReportService $reportService): BinaryFileResponse
     {
         $filters = $request->validated();
-        $report = (new TaskReportService($filters))->generate();
+        $report = $reportService
+            ->setFilters($filters)
+            ->generate();
 
         return response()->download($report, 'task.csv');
     }
