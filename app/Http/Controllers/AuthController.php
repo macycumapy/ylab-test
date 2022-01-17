@@ -17,7 +17,6 @@ class AuthController extends Controller
      */
     public function register(RegisterRequest $request): JsonResponse
     {
-        print_r($request->validated());
         $data = $request->validated();
         $data['password'] = bcrypt($request->password);
         /** @var User $user */
